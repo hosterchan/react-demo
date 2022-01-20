@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Component & props</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+    <div id="root2"></div>
+
+    <script type="text/babel">
+        //组件名称必须以大写字母开头, React 会将以小写字母开头的组件视为原生 DOM 标签
+
+        //组件无论是使用函数声明还是通过 class 声明，都决不能修改自身的 props, propss是只读的
+
+        //定义组件方式1
+        function Welcome(props) {
+            return <h1>Hello, {props.name}</h1>;
+        }
+
+        //定义组件方式2
+        class Welcome2 extends React.Component {
+            render() {
+                return <h1>Hello, {this.props.name}</h1>;
+            }
+        }
+        
+        ReactDOM.render(<Welcome name="sara" />,
+            document.getElementById('root')
+        );
+
+        // 1.我们调用 ReactDOM.render() 函数，并传入 <Welcome name="Sara" /> 作为参数。
+        // 2.React 调用 Welcome 组件，并将 {name: 'Sara'} 作为 props 传入。
+        // 3.Welcome 组件将 <h1>Hello, Sara</h1> 元素作为返回值。
+        // 4.React DOM 将 DOM 高效地更新为 <h1>Hello, Sara</h1>。
+
+        //组合组件，组件可以引用其他组件
+        function Welcome(props) {
+            return <h1>Hello, {props.name}</h1>;
+        }
+
+        function App() {
+            return (
+                <div>
+                <Welcome name="Sara" />
+                <Welcome name="Cahal" />
+                <Welcome name="Edite" />
+                </div>
+            );
+        }
+
+        ReactDOM.render(
+            <App />,
+            document.getElementById('root2')
+        );
+    </script>
+</body>
+
+</html>
